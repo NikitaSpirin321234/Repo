@@ -1,0 +1,131 @@
+#include <stdio.h>
+#include <string.h>
+
+int palindrom(char* word, int n)
+{
+    if(n >= strlen(word)-1-n)
+        return 1;
+    if(word[n] == word[strlen(word)-1-n])
+        palindrom(word, n+1);
+    else
+        return 0;
+}
+
+int main()
+{
+    char word[100] = "";
+    //fgets(word, sizeof(word), stdin); (strchr(word, '\n') != NULL) && ((*(strchr(word, '\n'))) = '\0');
+    scanf("%s", word);
+    if(palindrom(word, 0))
+        printf("Yes!\n");
+    else
+        printf("No!\n");
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define N 26
+#define K 7
+typedef struct{
+    int key;
+    char letter;
+}pairs;
+int main() {
+    pairs pair[N];
+    for (int i = 0; i < N; i++){
+        scanf("%d %c", &pair[i].key, &pair[i].letter);
+    }
+    int a[K];
+    char s[K] = "";
+    for (int i = 0; i < K; i++){
+        scanf("%d", &a[i]);
+    }
+    int flag;
+    for (int j = 0; j < K; j++){
+        flag = 0;
+        for (int i = 0; i < N; i++){
+            if (pair[i].key == a[j]){
+                flag = 1;
+                sprintf(s+j, "%c", pair[i].letter);
+            }
+        }
+        if(!flag) {
+            printf("Error\n");
+            return 0;
+        }
+    }
+    printf("%s\n", s);
+    return 0;
+}
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+    char teacher[100];
+    char student[100];
+    char group[100];
+    char discipline[100];
+}info;
+
+typedef struct {
+    info *data;
+    int count;
+}Table;
+
+int cmp(const void *a, const void *b)
+{
+    return strcmp((char*)(*(char**)a), (char*)(*(char**)b));
+}
+
+int main() {
+    Table table;
+    table.data = NULL;
+    table.count = 0;
+    table.data = (info*)malloc(sizeof(info));
+    while(scanf("%[^ ,\n], %[^ ,\n], %[^ ,\n], %[^ ,\n]", table.data[table.count].teacher, table.data[table.count].student, table.data[table.count].group, table.data[table.count].discipline) == 4){
+        table.count++;
+        table.data = realloc(table.data, (table.count + 1) * sizeof(info));
+        getchar();
+    }
+    for (int i = 0; i < table.count; ++i) {
+        for (int j = 0; j < table.count; ++j) {
+            if (i != j)
+                if (strcmp(table.data[i].teacher, table.data[j].teacher) == 0) {
+                    if (strlen(table.data[j].group) != 0 && strcmp(table.data[i].group, table.data[j].group) == 0) {
+                        table.data[j].group[0] = 0;
+                    }
+                }
+        }
+    }
+    char ** output = (char**)malloc(128 * sizeof(char*));
+    for (int i = 0; i < 128; ++i) {
+        output[i] = (char*)malloc(128 * sizeof(char));
+    }
+    int num = 0;
+    for (int i = 0, count = 0; i < table.count; ++i, count = 0) {
+        for (int j = 0; j < table.count; ++j) {
+            if (i != j)
+                if (strlen(table.data[j].teacher) != 0 && strcmp(table.data[i].teacher, table.data[j].teacher) == 0) {
+                    table.data[j].teacher[0] = 0;
+                    if (strlen(table.data[j].group) != 0) {
+                        count++;
+                    }
+                }
+        }
+        if (strlen(table.data[i].teacher) != 0) {
+            sprintf(output[num], "%s %d", table.data[i].teacher, count + 1);
+            num++;
+        }
+    }
+    qsort(output, num, sizeof(char*), cmp);
+    for (int i = 0; i < num; ++i) {
+        printf("%s\n", output[i]);
+    }
+    return 0;
+}
