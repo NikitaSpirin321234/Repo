@@ -1,0 +1,153 @@
+include <iostream>
+
+using namespace std;
+
+void read_s_expr(string str, int &index_start);
+
+struct s_expr;
+struct two_ptr {
+    s_expr* hd;
+    s_expr* tl;
+};
+struct s_expr {
+    bool tag;
+    string atom;
+    two_ptr pair;
+};
+
+typedef s_expr* lisp;
+
+bool isAtom (const lisp s){
+    if (s == nullptr)
+        return false;
+    else
+        return (s -> tag);
+}
+
+lisp make_atom (string x){
+    lisp s;
+    s = new s_expr;
+    s->tag = true;
+    s->atom = x;
+    return s;
+}
+
+lisp cons (const lisp h, const lisp t){
+    lisp p;
+    if (isAtom(t)){
+        cerr << "Error: cons(*, atom) \n"; exit(1);}
+    else{
+        p = new s_expr;
+        if ( p == nullptr){
+            cerr << "Memory ...\n"; exit(1);
+        }
+        p->tag = false;
+        p->pair.hd = h;
+        p->pair.tl = t;
+        return p;
+    }
+}
+
+
+
+
+
+void read_s_expr(lisp s, string str, int &index_start)
+{
+    lisp p1, p2;
+    int index_close_bracket;
+    int index_open_bracket;
+    int index_end = index_start;
+    if(str[index_start+1] == ' '){
+        cerr << "String is incorrect! Check gap positions!1" << endl;
+        exit(1);
+    }
+    while(str[index_start+1] == '(') {
+        index_start++;
+        read_s_expr(str, index_start);
+    }
+    if(str[index_start] == ')') {
+        if(index_start != str.size()-1)
+            index_start++;
+        return;
+    }
+    index_close_bracket = str.find(")", index_start + 1);
+    index_open_bracket = str.find("(", index_start + 1);
+    index_end = str.find(" ", index_start + 1);
+    if(index_open_bracket < index_end && index_end != string::npos && index_open_bracket != string::npos){
+        cerr << "String is incorrect! Check gap positions!2" << endl;
+        exit(1);
+    }
+    if(index_end != string::npos && index_end < index_close_bracket) {
+        if(str[index_end-1] == '(' || str[index_end+1] == ')' || str[index_end+1] == ' ' || str[index_end-1] == ' ') {
+            cerr << "String is incorrect! Check gap positions!3" << endl;
+            exit(1);
+        }
+        string atom = str.substr(++index_start, index_end - index_start - 1);
+        cerr << atom << endl;
+        p1 = make_atom(atom);
+        index_start = index_end;
+        read_s_expr(str, index_start);
+    }
+    else{
+        index_end = str.find(")", index_start + 1);
+        if(index_end != string::npos) {
+            if(str[index_end-1] == ' ' || str[index_end+1] == '('){
+                cerr << "String is incorrect! Check gap positions!4" << endl;
+                exit(1);
+            }
+            if(str[index_open_bracket-1] != ' ' && str[index_open_bracket-1] != '(' && index_open_bracket != string::npos){
+                cerr << "String is incorrect! Check gap positions!5" << endl;
+                exit(1);
+            }
+            string atom = str.substr(++index_start, index_end - index_start - 1);
+            cerr << atom << endl;
+            if(str[index_end+1] == ' ' || str[index_end+1] == ')')
+                index_start = index_end + 1;
+            else
+                index_start = index_end;
+        }
+    }
+}
+
+
+void readList(string str, lisp s)
+{
+    if(str[0] != '(' || str[str.size()-1] != ')'){
+        cerr << "String is incorrect1!" << endl;
+        exit(1);
+    }
+    if(str.size() < 3){
+        cerr << "String is too short!" << endl;
+        exit(1);
+    }
+    int index_start = 1;
+    int brackets;
+    for (brackets = 1, index_start; index_start < str.size(); index_start++) {
+        if (str[index_start] == '(')
+            brackets++;
+        else if (str[index_start] == ')')
+            brackets--;
+    }
+    if (brackets != 0) {
+        cerr << "Count of open brackets not equal count close brackets!" << endl;
+        exit(1);
+    }
+    index_start = 0;
+    read_s_expr(s, str, index_start);
+    if(index_start == str.size()-1)
+        cerr << "String is correct!" << endl;
+    else {
+        cerr << "String is incorrect2!" << endl;
+        exit(1);
+    }
+}
+
+int main() {
+    lisp s;
+    s->pair.hd = nullptr;
+    s->pair.tl = nullptr;
+    string str = "(a b)";
+    readList(str, s);
+    return 0;
+}
