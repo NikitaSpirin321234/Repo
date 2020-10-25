@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="main-wrapper">
+    <div class="wrapper">
+        <h1 class="gamename">Игра Tetris</h1>
+    </div>
+    <form class="form" action="main.html" method="get">
+        <label>
+            <input class="username" name="username" placeholder="Имя пользователя"><br>
+        </label><br>
+            <input class="input" type="submit" value="Ввод" onclick="storeName(this.form.username.value)">
+    </form>
+
+</div>
+<script>
+    function storeName(name) {
+        localStorage["tetris.username"] = name;
+    }
+</script>
+</body>
+</html>

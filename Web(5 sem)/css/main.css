@@ -1,0 +1,83 @@
+body {
+    background-color: #cecece;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.gamename {
+    font-size: 35px;
+    color: #01074b;
+}
+
+.wrapper {
+    display: block;
+    align-items: center;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 0 40px;
+    margin: 0 auto;
+    /*width: 700px;*/
+    height: 500px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 50px;
+    height: 30px;
+    color: #292a0b;
+    background-color: dodgerblue;
+    border-radius: 8px;
+    border: solid 2px #01074b;
+}
+
+.input:hover {
+    background-color: #81bbbf;
+}
+
+.username {
+    width: 150px;
+    height: 20px;
+    color: #292a0b;
+    background-color: #ade2ff;
+    border-radius: 5px;
+    border: solid 2px #01074b;
+}
+
+    /*main*/
+
+.main {
+    width: 800px;
+    /*padding: 60px 200px;*/
+    background-color: #fffec1;
+    margin: 10px auto;
+    border: solid 3px black;
+    border-radius: 5px;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#glass {
+    border: 1px solid black;
+}
+
+#nextBrick {
+    border: 1px solid black;
+}
