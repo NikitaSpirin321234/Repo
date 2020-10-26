@@ -99,6 +99,26 @@ export default class Game {
             }
     }
 
+    dropFigure(view, viewNextBrick){
+        console.log("drop!");
+        while(!this.isCollision())
+            this.activeFigure.y++;
+        this.activeFigure.y--;
+        this.fixFigure();
+        let clearedLines = this.clearLines();
+        this.updateScore(clearedLines);
+        this.updateFigures();
+        viewNextBrick.clearBrick();
+        viewNextBrick.viewB();
+        if(this.isCollision()) {
+            this.isOver = true;
+        }
+        else {
+            view.clearScreen();
+            view.viewGF(this.getState);
+        }
+    }
+
     isCollision() {
         const figure = this.activeFigure.figure;
         const field = this.field;

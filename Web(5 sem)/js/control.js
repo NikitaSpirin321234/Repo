@@ -28,8 +28,18 @@ export default class Control{
                     case 'ArrowDown':
                         this.stopTimer();
                         this.updateView(view, viewNextBrick);
-                        //game.moveFigureDown(view, viewNextBrick);
-                        //this.updateState();
+                        break;
+
+                }
+            }
+        });
+
+        document.addEventListener('keypress', event => {
+            const keyName = event.key;
+            if(!this.game.isOver) {
+                switch (keyName) {
+                    case ' ':
+                        game.dropFigure(view, viewNextBrick);
                         break;
                 }
             }
@@ -59,7 +69,7 @@ export default class Control{
             this.view.viewGameOverScreen();
             let name = localStorage["tetris.username"];
             let score = this.game.score;
-            //localStorage.setItem(name, score);
+
             let json = {
                 name: name,
                 score: score
