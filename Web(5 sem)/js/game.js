@@ -93,7 +93,7 @@ export default class Game {
             for(let x = 0; x < figure[y].length; x++){
                 if(figure[y][x] === 1 || figure[y][x] === 2 || figure[y][x] === 3 ||
                     figure[y][x] === 4 || figure[y][x] === 5 || figure[y][x] === 6 ||
-                    figure[y][x] === 7) {
+                    figure[y][x] === 7 || figure[y][x] === 8) {
                     this.field.matrix[figureY + y][figureX + x] = figure[y][x];
                 }
             }
@@ -130,10 +130,10 @@ export default class Game {
                      || field.matrix[figureY + y][figureX + x] === 1 || field.matrix[figureY + y][figureX + x] === 2 ||
                      field.matrix[figureY + y][figureX + x] === 3 || field.matrix[figureY + y][figureX + x] === 4 ||
                      field.matrix[figureY + y][figureX + x] === 5 || field.matrix[figureY + y][figureX + x] === 6 ||
-                     field.matrix[figureY + y][figureX + x] === 7)
+                     field.matrix[figureY + y][figureX + x] === 7 || field.matrix[figureY + y][figureX + x] === 8)
                     && (figure[y][x] === 1 || figure[y][x] === 2 ||
                      figure[y][x] === 3 || figure[y][x] === 4 || figure[y][x] === 5 ||
-                     figure[y][x] === 6 || figure[y][x] === 7))
+                     figure[y][x] === 6 || figure[y][x] === 7 || figure[y][x] === 8))
                      return true;
              }
         }
@@ -178,7 +178,7 @@ export default class Game {
 
 
     createFigure(){
-        const indexType = Math.floor(Math.random() * 7);
+        const indexType = Math.floor(Math.random() * 8);
         let nextFigure = {};
 
         switch(indexType){
@@ -235,6 +235,14 @@ export default class Game {
                     [0,7,0],
                     [7,7,7],
                     [0,0,0]
+                ];
+                nextFigure.y = 0;
+                break;
+            case 7:
+                nextFigure.figure = [
+                    [8,0,8],
+                    [0,8,0],
+                    [8,0,8]
                 ];
                 nextFigure.y = 0;
                 break;

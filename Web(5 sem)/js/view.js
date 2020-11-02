@@ -36,6 +36,9 @@ class View{
             case 7:
                 color = 'purple';
                 break;
+            case 8:
+                color = 'brown';
+                break;
             default:
                 break;
         }
