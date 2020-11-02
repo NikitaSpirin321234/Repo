@@ -3,6 +3,9 @@ import Control from './control.js';
 import {ViewGameField} from './view.js';
 import {ViewNextBrick} from './view.js';
 
+//let username = document.getElementById('username');
+//username.innerText = "Name";//lastPlayer.name;
+
 const game = new Game();
 const view = new ViewGameField(game);
 const viewNextBrick = new ViewNextBrick(game);

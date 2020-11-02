@@ -100,7 +100,6 @@ export default class Game {
     }
 
     dropFigure(view, viewNextBrick){
-        console.log("drop!");
         while(!this.isCollision())
             this.activeFigure.y++;
         this.activeFigure.y--;
@@ -273,7 +272,6 @@ export default class Game {
                 break;
         }
 
-        //console.log(lines);
         for(let line of lines){
             matrix.splice(line, 1);
             matrix.unshift(new Array(width).fill(0));

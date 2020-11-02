@@ -2,7 +2,7 @@ const table = document.getElementById('records');
 
 let records = JSON.parse(localStorage["tetris.records"])['records'];
 
-console.log("Records: ", records);
+//console.log("Records: ", records);
 
 let lastPlayer = records[records.length - 1];
 

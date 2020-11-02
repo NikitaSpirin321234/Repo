@@ -12,7 +12,7 @@
     </div>
     <form class="form" action="main.html" method="get">
         <label>
-            <input class="username" name="username" placeholder="Имя пользователя"><br>
+            <input id="username" class="username" name="username" placeholder="Имя пользователя"> <br>
         </label>
             <input class="input" type="submit" value="Ввод" onclick="storeName(this.form.username.value)">
     </form>
@@ -22,6 +22,18 @@
     function storeName(name) {
         localStorage["tetris.username"] = name;
     }
+
+    window.onload = function() {
+        let name = document.getElementById("username");
+        name.value = localStorage["tetris.username"];
+    }
+
+    // function load(){
+    //     console.log("!");
+    //     let username = document.getElementById('username');
+    //     username.innerText = "Name";//lastPlayer.name;
+    //     //localStorage["tetris.username"];
+    // }
 </script>
 </body>
 </html>
