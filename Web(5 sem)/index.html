@@ -25,7 +25,8 @@
 
     window.onload = function() {
         let name = document.getElementById("username");
-        name.value = localStorage["tetris.username"];
+        if(localStorage["tetris.username"] !== undefined)
+            name.value = localStorage["tetris.username"];
     }
 
 </script>

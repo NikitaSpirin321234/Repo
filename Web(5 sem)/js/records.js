@@ -7,32 +7,14 @@ let lastPlayer = records[records.length - 1];
 records.sort((a, b) => {
     return b.score - a.score;
 })
-// let i = 0;
-// for (let row of records){
-//     if (i >= 10) {
-//         break;
-//     }
-//     if(row) {
-//         let tr = document.createElement('tr');
-//         let name = document.createElement('td');
-//         let score = document.createElement('td');
-//         name.textContent = row.name;
-//         score.textContent = row.score;
-//         tr.appendChild(name);
-//         tr.appendChild(score);
-//         table.appendChild(tr);
-//         i++;
-//     }
-// }
 
-
-let addedNames = [];
-let i = 0;
+let addedRows = [];
 for (let row of records) {
-    if (i >= 10) {
+    if(addedRows.length >= 10)
         break;
-    }
-    if(lastPlayer.name !== row.name && addedNames.indexOf(row.name) === -1){
+    // Если не добавлена строка с таким именем, добавляем
+    if(addedRows.filter(addedRow => row.name === addedRow.name).length === 0){
+        console.log("Игрок с таким именем ещё не был найден ранее!");
         let tr = document.createElement('tr');
         tr.id = row.name;
         let name = document.createElement('td');
@@ -42,25 +24,20 @@ for (let row of records) {
         tr.appendChild(name);
         tr.appendChild(score);
         table.appendChild(tr);
-        addedNames.push(row.name);
+        addedRows.push(row);
     }
-    else if(lastPlayer.name === row.name && addedNames.indexOf(row.name) === -1){
-        let tr = document.createElement('tr');
-        tr.id = row.name;
-        let name = document.createElement('td');
-        let score = document.createElement('td');
-        name.textContent = row.name;
-        score.textContent = row.score;
-        tr.appendChild(name);
-        tr.appendChild(score);
-        table.appendChild(tr);
-        addedNames.push(row.name);
+    // Если уже была добавлена строка с таким именем, проверяем, является ли счет в этой строке лучше
+    else if(addedRows.filter(addedRow => row.name === addedRow.name).length !== 0){
+        console.log("Игрок с таким именем уже был найден ранее!");
+        if(row.score > addedRows.filter(addedRow => row.name === addedRow.name)[0]) {
+            console.log("Найден счет лучше прежнего!");
+            let tr = document.getElementById(row.name);
+            tr.lastElementChild.textContent = row.score;
+            for(let addedRow of addedRows)
+                if(addedRow.name === row.name)
+                    addedRow.score = row.score;
+        }
     }
-    else if(lastPlayer.name === row.name && addedNames.indexOf(row.name) !== -1 && lastPlayer.score > row.score){
-        let tr = document.getElementById(row.name);
-        tr.lastElementChild.textContent = lastPlayer.score;
-    }
-    i++;
 }
 
 let tr = document.createElement('tr');
